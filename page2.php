@@ -1,6 +1,6 @@
 <html>
 <head>
-<Title>Registration Form</Title>
+<Title>Search form</Title>
 <style type="text/css">
     body { background-color: #fff; border-top: solid 10px #000;
         color: #333; font-size: .85em; margin: 20; padding: 20;
@@ -16,12 +16,10 @@
 </style>
 </head>
 <body>
-<h1>Register here!</h1>
-<p>Fill in your name and email address, then click <strong>Submit</strong> to register.</p>
-<form method="post" action="index.php" enctype="multipart/form-data" >
-      Name  <input type="text" name="name" id="name"/></br>
-      Email <input type="text" name="email" id="email"/></br>
-      Company_Name <input type ="text" name="company" id="company"/><br>
+<h1>Search here!</h1>
+<p>Do a search!</p>
+<form method="get" action="page2.php" enctype="multipart/form-data" >
+      Name to search for  <input type="text" name="name" id="name"/></br>
       <input type="submit" name="submit" value="Submit" />
 </form>
 
@@ -47,33 +45,27 @@
         die(var_dump($e));
     }
     // Insert registration info
-    if(!empty($_POST)) {
+    if(!empty($_GET)) {
     try {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $date = date("Y-m-d");
-        $company = $_POST['company'];
-        // Insert data
-        $sql_insert = "INSERT INTO registration_tbl (name, email, date, company) 
-                   VALUES (?,?,?,?)";
-        $stmt = $conn->prepare($sql_insert);
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $email);
-        $stmt->bindValue(3, $date);
-        $stmt->bindValue(4, $company);
-        $stmt->execute();
+        $name = $_GET['name'];
+        $searched = True; 
+        
     }
     catch(Exception $e) {
         die(var_dump($e));
     }
-    echo "<h3>Your're registered!</h3>";
+
     }
+    if ($searched == TRUE) {
+
     // Retrieve data
-    $sql_select = "SELECT * FROM registration_tbl";
+    $sql_select = "SELECT * FROM registration_tbl
+    WHERE name LIKE '%$name%'";
+
     $stmt = $conn->query($sql_select);
     $registrants = $stmt->fetchAll(); 
     if(count($registrants) > 0) {
-        echo "<h2>People who are registered:</h2>";
+        echo "<h2>Results of the search</h2>";
         echo "<table>";
         echo "<tr><th>Company Name</th>";
         echo "<th>Name</th>";
@@ -88,8 +80,8 @@
         }
         echo "</table>";
     } else {
-        echo "<h3>No one is currently registered.</h3>";
-    }
+        echo "<h3>There were no results</h3>";
+  }  }
 ?>
 </body>
 </html>
