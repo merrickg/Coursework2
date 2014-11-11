@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-<h1>Search here! test</h1>
+<h1>Search here! merrick</h1>
 <p>Do a search!</p>
 <form method="get" action="page2.php" enctype="multipart/form-data" >
       Name to search for  <input type="text" name="name" id="name"/></br>
