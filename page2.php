@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-<h1>Search here!</h1>
+<h1>Search here! test</h1>
 <p>Do a search!</p>
 <form method="get" action="page2.php" enctype="multipart/form-data" >
       Name to search for  <input type="text" name="name" id="name"/></br>
@@ -45,6 +45,8 @@
         die(var_dump($e));
     }
     // Insert registration info
+
+  
     if(!empty($_GET)) {
     try {
         $name = $_GET['name'];
